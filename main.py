@@ -8,14 +8,32 @@ import threading
 import sys
 
 def app_dir() -> Path:
+    # When running as a PyInstaller bundle
     if getattr(sys, "frozen", False):
         return Path(sys.executable).parent
+    # When running from source
     return Path(__file__).parent
 
-APP_DIR = Path(__file__).parent
-STORY_PATH = APP_DIR / "story.json"
+def resource_path(rel: str) -> Path:
+    """
+    Find a resource next to the .exe (or in the PyInstaller temp folder if --add-data was used).
+    """
+    base = Path(getattr(sys, "_MEIPASS", app_dir()))
+    return str(base / rel)
 
-load_dotenv()
+STORY_PATH = app_dir() / "story.json"
+if not STORY_PATH.exists():
+    from tkinter import messagebox
+    messagebox.showerror(
+        "Story not found",
+        f"Couldn't find story.json.\nLooked at:\n{STORY_PATH}"
+    )
+    raise SystemExit(1)
+
+
+ENV_PATH = app_dir() / ".env"
+load_dotenv(ENV_PATH if ENV_PATH.exists() else None)
+
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 # ---------- Validation ----------
@@ -228,6 +246,15 @@ def build_ui():
 
     root = tk.Tk()
     root.title("Enter The Forest")
+
+    try:
+        root.iconbitmap(resource_path("tree.ico"))
+    except Exception:
+        try:
+            img = tk.PhotoImage(file=resource_path("forest.png"))
+            root.iconphoto(True, img)
+        except Exception:
+            pass
 
     tk.Label(root, text="Story").pack(anchor="w", padx=10, pady=(10, 0))
     box = scrolledtext.ScrolledText(root, wrap="word", height=20, width=70)
