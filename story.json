@@ -1,0 +1,68 @@
+{
+  "start": {
+    "text": "You awake from your slumber in a dark forest. In front of you sits a stone upon further inspection you see letters written on it. Do you want to try and read what it says?",
+    "options": [
+      { "label": "Read it", "next": "read_it" },
+      { "label": "Waste of time", "next": "waste_of_time" }
+    ]
+  },
+  "waste_of_time": {
+    "text": "You ignore the stone and continue wandering. Suddenly you hear strange whispers startling you!",
+    "options": [
+      { "label": "Investigate the whispers", "next": "take_the_path" },
+      { "label": "Turn back", "next": "start" }
+    ]
+  },
+  "read_it": {
+    "text": "You take a closer look at the stone and can barely make out the words. Don't Take The Path!",
+    "options": [
+      { "label": "Take The Path", "next": "take_the_path" },
+      { "label": "Look for a new option", "next": "look_new_option" }
+    ]
+  },
+  "take_the_path": {
+    "text": "You follow the whispers deeper into the shadows...",
+    "next_hint": "Lead into the forest deeper on the path and listen to the whispers.",
+    "next_map": ["screaming_women", "monster", "run"],
+    "options": []
+  },
+  "look_new_option": {
+    "text": "You look around the small clearing you woke up into. While looking at a large tree you notice a small handle on the backside of it.",
+    "next_hint": "What happens when the door is open where do you end up?",
+    "next_map": ["forest", "castle"],
+    "options": []
+  },
+  "screaming_women": {
+    "text": "You hear screams, startled, you ask yourself what was that?",
+    "next_hint": "Again you hear a woman's screams deep in the forest. It echoes among the trees as if it was coming from every direction at once.",
+    "next_map": ["monster", "run"],
+    "options": []
+  },
+  "monster": {
+    "text": "You hear a single leaf crushed under a footstep. You whip your head around, but see nothing. Your body goes numb and your vision fades to black—all you can think is: what was that?",
+    "options": [
+      { "label": "The abyss devoured you... (restart)", "next": "start" }
+    ]
+  },
+  "forest": {
+    "text": "You open the door and feel a strange energy as you step through. A clearing, a stone—the loop begins again.",
+    "options": [
+      { "label": "Read it", "next": "read_it" },
+      { "label": "Waste of time", "next": "waste_of_time" }
+    ]
+  },
+  "castle": {
+    "text": "Stone corridors and faded banners. Somewhere, a distant clock chimes.",
+    "options": [
+      { "label": "Explore the hall", "next": "forest" },
+      { "label": "Return to the clearing", "next": "start" }
+    ]
+  },
+  "run": {
+    "text": "You bolt through the underbrush, lungs burning, the whispers fading behind you.",
+    "options": [
+      { "label": "Catch your breath", "next": "forest" },
+      { "label": "Risk the path again", "next": "take_the_path" }
+    ]
+  }
+}
